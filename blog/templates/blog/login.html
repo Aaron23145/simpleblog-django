@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'blog/base.html' %}
 
 {% block content %}
 
@@ -15,7 +15,7 @@
   {% endif %}
 {% endif %}
 
-<form method="post" action="{% url 'login' %}">
+<form method="post" action="{% url 'blog:login' %}">
 {% csrf_token %}
 <table>
 
