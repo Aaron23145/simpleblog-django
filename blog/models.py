@@ -23,6 +23,9 @@ class Entry(models.Model):
     def __str__(self):
         return f'{self.title} by {self.author}: {self.summary[:10]}'
 
+    class Meta:
+        verbose_name_plural = 'entries'
+
 
 class Profile(models.Model):
     """Profile that will have extra info about the user."""

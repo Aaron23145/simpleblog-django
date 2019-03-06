@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Index - {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+  <ul>
+    {% for entry in latest_entries_list %}
+      <li>{{ entry.title }}: {{ entry.content }} by {{ entry.author }}</li>
+    {% endfor %}
+  </ul>
+{% endblock content %}
