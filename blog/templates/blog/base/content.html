@@ -1,0 +1,11 @@
+{% extends 'blog/base/main.html' %}
+
+{% block body %}
+  <header>
+    {% include 'blog/components/navbar.html' %}
+    {% include 'blog/components/carousel.html' %}
+  </header>
+
+  {% block content %}
+  {% endblock content %}
+{% endblock body %}

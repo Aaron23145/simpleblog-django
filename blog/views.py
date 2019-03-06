@@ -7,7 +7,7 @@ from .models import Entry
 
 
 class Index(generic.ListView):
-    template_name = 'blog/index.html'
+    template_name = 'blog/content/index.html'
     context_object_name = 'latest_entries_list'
 
     def get_queryset(self):
@@ -28,4 +28,4 @@ def signup(request):
             login(request, user)
             return redirect('blog:index')
 
-    return render(request, 'blog/signup.html', {'form': form})
+    return render(request, 'blog/auth/signup.html', {'form': form})
