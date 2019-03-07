@@ -19,12 +19,31 @@
       </ul>
 
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'blog:login' %}">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'blog:signup' %}">Sign up</a>
-        </li>
+        {% if user.is_authenticated %}
+          {% if user.is_staff or user.is_superuser %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin:index' %}">Admin CP</a>
+            </li>
+          {% endif %}
+          {% if user.profile.can_access_ecp %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'blog:editorcp' %}">Editor CP</a>
+            </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="#">{{ user.username }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'blog:logout' %}">Logout</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'blog:login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'blog:signup' %}">Sign up</a>
+          </li>
+        {% endif %}
       </ul>
 
     </div>

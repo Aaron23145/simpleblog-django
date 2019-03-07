@@ -13,5 +13,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(
         template_name='blog/auth/logout.html'
     ), name='logout'),
-    path('signup/', views.signup, name='signup'),
+    path('signup/', views.Signup.as_view(), name='signup'),
+    path('editorcp/', views.editorcp_index, name='editorcp'),
+    path('editorcp/entries/new/', views.editorcp_create_entry, name='create_entry'),
 ]

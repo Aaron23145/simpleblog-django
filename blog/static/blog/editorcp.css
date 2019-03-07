@@ -1,0 +1,16 @@
+:root {
+  --sidebar-width: 350px;
+}
+
+.ecp-sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  overflow-y: auto;
+}
+
+.ecp-content {
+  margin-left: var(--sidebar-width);
+}

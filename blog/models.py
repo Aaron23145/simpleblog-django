@@ -30,7 +30,10 @@ class Entry(models.Model):
 class Profile(models.Model):
     """Profile that will have extra info about the user."""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    is_editor = models.BooleanField()
+    is_editor = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.user} is ' + ('not ' if not self.is_editor else '') + 'an editor'
+
+    def can_access_ecp(self):
+        return self.user.is_staff or self.user.is_superuser or self.is_editor
