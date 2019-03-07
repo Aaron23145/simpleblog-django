@@ -1,6 +1,13 @@
 {% extends 'blog/base/main.html' %}
+{% load static %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="{% static 'blog/auth.css' %}">
+{% endblock stylesheets %}
 
 {% block body %}
-  {% block content %}
-  {% endblock content %}
+  <div class="login-box">
+    {% block content %}
+    {% endblock content %}
+  </div>
 {% endblock body %}
