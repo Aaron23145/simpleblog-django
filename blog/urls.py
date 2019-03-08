@@ -15,5 +15,8 @@ urlpatterns = [
     ), name='logout'),
     path('signup/', views.Signup.as_view(), name='signup'),
     path('editorcp/', views.editorcp_index, name='editorcp'),
-    path('editorcp/entries/new/', views.editorcp_create_entry, name='create_entry'),
+    path('editorcp/entries/new/', views.EditorcpCreateEntry.as_view(), name='create_entry'),
+    path('editorcp/entries/', views.EditorcpListEntries.as_view(), name='list_entries'),
+    path('editorcp/entries/<int:pk>/', views.EditorcpEditEntry.as_view(), name='edit_entry'),
+    path('editorcp/entries/<int:pk>/remove/', views.EditorcpDeleteEntry.as_view(), name='delete_entry'),
 ]

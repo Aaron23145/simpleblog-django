@@ -1,13 +1,13 @@
-{% extends 'blog/base/auth.html' %}
+{% extends 'blog/base/editorcp.html' %}
 
 {% block title %}
-  Sign up - {{ block.super }}
+  Edit Entry - {{ block.super }}
 {% endblock title %}
 
 {% block content %}
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Register">
+    <input type="submit" value="Edit">
   </form>
 {% endblock content %}

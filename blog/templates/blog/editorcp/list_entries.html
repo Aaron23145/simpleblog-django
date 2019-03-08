@@ -1,0 +1,19 @@
+{% extends 'blog/base/editorcp.html' %}
+
+{% block title %}
+  Edit Entries - {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+  <ul>
+  {% for entry in latest_entries_list %}
+    <li>
+        <a href="{% url 'blog:edit_entry' entry.pk %}">{{ entry.title }}</a>
+        published by
+        <a>{{ entry.author }}</a>
+        at {{ entry.pub_date }}.
+        <a href="{% url 'blog:delete_entry' entry.pk %}">Delete</a>
+    </li>
+  {% endfor %}
+  </ul>
+{% endblock content %}

@@ -1,13 +1,13 @@
 {% extends 'blog/base/editorcp.html' %}
 
 {% block title %}
-  Create Entry - {{ block.super }}
+  Edit Entry - {{ block.super }}
 {% endblock title %}
 
 {% block content %}
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Create">
+    <p>Are you sure you want to delete {{ object }}?</p>
+    <input type="submit" value="Confirm">
   </form>
 {% endblock content %}

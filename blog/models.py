@@ -17,7 +17,7 @@ class Entry(models.Model):
     content = models.TextField()
     summary = models.TextField()
     pub_date = models.DateTimeField('date published')
-    tag = models.ManyToManyField(Tag)
+    tag = models.ManyToManyField(Tag, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -31,3 +31,8 @@
   width: 75px;
   padding: 5px 0;
 }
+
+.fas.fa-arrow-circle-left,
+.fas.fa-arrow-circle-right {
+  font-size: 2rem;
+}
