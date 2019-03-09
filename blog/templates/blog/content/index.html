@@ -5,9 +5,19 @@
 {% endblock title %}
 
 {% block content %}
-  <ul>
-    {% for entry in latest_entries_list %}
-      <li>{{ entry.title }}: {{ entry.content }} by {{ entry.author }}</li>
-    {% endfor %}
-  </ul>
+  <h1 class="d-none">Latest entries</h1>
+  {% for entry in latest_entries_list %}
+    <article>
+      <div class="row">
+        <h2 class="entry-title col-12 col-xl-8"><a href="#">{{ entry.title }}</a></h2>
+        <p class="entry-info col align-self-end">
+          At {{ entry.pub_date }} by 
+          <a class="entry-author" href="#">{{ entry.author }}</a>
+        </p>
+      </div>
+      <p class="entry-summary">{{ entry.summary }}</p>
+      <p>{{ entry.content }}</p>
+    </article>
+  {% endfor %}
 {% endblock content %}
+

@@ -1,7 +1,3 @@
-:root {
-  --main-blue-color: #4682B4;
-}
-
 .navbar {
   font-family: 'Julius Sans One', sans-serif;
   text-transform: lowercase;
@@ -12,7 +8,7 @@
 }
 
 .nav-item.active {
-  border-bottom: 4px solid var(--main-blue-color);
+  border-bottom: 4px solid var(--main-blue);
 }
 
 .nav-item:not(.active) {
@@ -27,7 +23,7 @@
 
 @media (min-width: 992px) {
   .nav-item:hover:not(.active) {
-    border-bottom: 4px solid var(--main-blue-color);
+    border-bottom: 4px solid var(--main-blue);
   }
 }
 
