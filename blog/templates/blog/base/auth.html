@@ -2,12 +2,20 @@
 {% load static %}
 
 {% block stylesheets %}
+  <link rel="stylesheet" href="{% static 'blog/components/navbar.css' %}">
   <link rel="stylesheet" href="{% static 'blog/base/auth.css' %}">
 {% endblock stylesheets %}
 
 {% block body %}
-  <div class="login-box">
-    {% block content %}
-    {% endblock content %}
+  <header>
+    {% include 'blog/components/navbar.html' %}
+  </header>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6 main-auth">
+        {% block content %}
+        {% endblock content %}
+      </div>
+    </div>
   </div>
 {% endblock body %}

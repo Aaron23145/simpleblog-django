@@ -20,21 +20,21 @@
 
   <form method="post" action="{% url 'blog:login' %}">
     {% csrf_token %}
-    <table>
+    {{ form.username.errors }}
+    <div class="d-flex flex-column flex-md-row align-items-center mt-2">
+      <label class="mr-3" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+      <input class="flex-grow-1" type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}" autofocus required>
+    </div>
 
-      <tr>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-      </tr>
+    {{ form.password.errors }}
+    <div class="d-flex flex-column flex-md-row align-items-center mt-2">
+      <label class="mr-3" for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+      <input class="flex-grow-1" type="password" name="{{ form.password.name }}" id="{{ form.password.id_for_label }}" required>
+    </div>
 
-      <tr>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-      </tr>
-
-    </table>
-
-    <input type="submit" value="login" />
+    <div class="text-center mt-2">
+      <input type="submit" value="Login" />
+    </div
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
 {% endblock content %}

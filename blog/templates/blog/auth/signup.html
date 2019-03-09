@@ -7,7 +7,28 @@
 {% block content %}
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Register">
+    {{ form.username.errors }}
+    <div class="d-flex flex-column flex-md-row align-items-center mt-2 mb-1">
+      <label class="mr-3" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+      <input class="flex-grow-1" type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}" autofocus required>
+    </div>
+    {{ form.username.help_text }}
+
+    {{ form.password1.errors }}
+    <div class="d-flex flex-column flex-md-row align-items-center mt-2 mb-1">
+      <label class="mr-3" for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+      <input class="flex-grow-1" type="password" name="{{ form.password1.name }}" id="{{ form.password1.id_for_label }}" required>
+    </div>
+    {{ form.password1.help_text }}
+
+    <div class="d-flex flex-column flex-md-row align-items-center mt-2 mb-1">
+      <label class="mr-3" for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+      <input class="flex-grow-1" type="password" name="{{ form.password2.name }}" id="{{ form.password2.id_for_label }}" required>
+    </div>
+    {{ form.password2.help_text }}
+
+    <div class="text-center mt-2">
+      <input type="submit" value="Register">
+    </div>
   </form>
 {% endblock content %}
