@@ -1,0 +1,33 @@
+:root {
+  --main-blue-color: #4682B4;
+}
+
+.navbar {
+  font-family: 'Julius Sans One', sans-serif;
+  text-transform: lowercase;
+}
+
+.nav-item.active {
+  font-weight: bold;
+}
+
+.nav-item.active {
+  border-bottom: 4px solid var(--main-blue-color);
+}
+
+.nav-item:not(.active) {
+  border-bottom: 4px solid transparent;
+}
+
+.navbar-brand {
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-weight: 900;
+}
+
+@media (min-width: 992px) {
+  .nav-item:hover:not(.active) {
+    border-bottom: 4px solid var(--main-blue-color);
+  }
+}
+

@@ -5,7 +5,7 @@
   right: 0;
   bottom: 0;
 
-  background: linear-gradient(to right, rgba(0, 0, 0, .8), transparent, transparent, transparent, rgba(0, 0, 0, .8));
+  background: linear-gradient(to right, rgba(0, 0, 0, .8), rgba(0, 0, 0, .2), rgba(0, 0, 0, .2), rgba(0, 0, 0, .2), rgba(0, 0, 0, .8));
   z-index: 1;
 }
 
@@ -19,20 +19,31 @@
 }
 
 .carousel-caption h5 {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .carousel-control-next,
 .carousel-control-prev {
   z-index: 2;
+  font-size: 2rem;
 }
 
 .carousel-indicators li {
   width: 75px;
-  padding: 5px 0;
 }
 
-.fas.fa-arrow-circle-left,
-.fas.fa-arrow-circle-right {
-  font-size: 2rem;
+@media (min-width: 1200px) {
+  .carousel-caption h5 {
+    font-size: 3rem;
+  }
+
+  .carousel-caption p {
+    font-size: 1.5rem;
+  }
+
+  .carousel-control-next,
+  .carousel-control-prev {
+      font-size: 3rem;
+  }
 }
+
