@@ -1,5 +1,6 @@
 :root {
   --main-blue: #4682B4;
+  --main-dark-blue: #2c5374;
 }
 
 body {
@@ -22,7 +23,8 @@ h6 {
 }
 
 .main-content a,
-.main-auth a {
+.main-auth a,
+.ecp-sidebar a {
   color: rgba(0, 0, 0, .6);
   transition: color .5s;
   border-bottom: 2px solid transparent;
@@ -30,7 +32,8 @@ h6 {
 }
 
 .main-content a:hover,
-.main-auth a:hover {
+.main-auth a:hover,
+.ecp-sidebar a:hover {
   color: black;
   text-decoration: none;
   border-bottom: 2px solid var(--main-blue);

@@ -3,11 +3,12 @@
   text-transform: lowercase;
 }
 
-.nav-item.active {
+.nav-item {
   font-weight: bold;
 }
 
 .nav-item.active {
+  color: black;
   border-bottom: 4px solid var(--main-blue);
 }
 

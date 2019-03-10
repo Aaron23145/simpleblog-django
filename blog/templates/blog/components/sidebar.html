@@ -1,7 +1,16 @@
 <nav class="ecp-sidebar">
+  <div class="group-title"><a href="{% url 'blog:index' %}">Blog Home</a></div>
+    <div class="group-title"><a href="{% url 'blog:editorcp' %}">EditorCP</a></div>
+
+    <div class="group-title">Entries Management</div>
     <ul>
-      <li><a href="{% url 'blog:editorcp' %}">EditorCP Index</a></li>
-      <li><a href="{% url 'blog:create_entry' %}">Create entry</a></li>
-      <li><a href="{% url 'blog:list_entries' %}">Edit entries</a></li>
+      <li><a href="{% url 'blog:create_entry' %}">Create new entry</a></li>
+      <li><a href="{% url 'blog:list_entries' %}">Edit or remove entries</a></li>
+    </ul>
+
+    <div class="group-title">Tags Management</div>
+    <ul>
+      <li><a href="#">Create new tag</a></li>
+      <li><a href="#">Edit or remove tags</a></li>
     </ul>
 </nav>
