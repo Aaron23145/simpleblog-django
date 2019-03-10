@@ -7,15 +7,23 @@
     <div class="collapse navbar-collapse" id="navbarContent">
 
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="{% url 'blog:index' %}">Home <span class="sr-only">(current)</span></a>
-        </li>
+
+        {% if active_navbar == 'home' %}
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'blog:index' %}">Home <span class="sr-only">(current)</span></a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'blog:index' %}">Home</a>
+          </li>
+        {% endif %}
         <li class="nav-item">
           <a class="nav-link" href="#">About</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Contact</a>
         </li>
+
       </ul>
 
       <ul class="navbar-nav ml-auto">
@@ -37,12 +45,27 @@
             <a class="nav-link" href="{% url 'blog:logout' %}">Logout</a>
           </li>
         {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'blog:login' %}">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'blog:signup' %}">Sign up</a>
-          </li>
+
+          {% if active_navbar == 'login' %}
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'blog:login' %}">Login <span class="sr-only">(current)</span></a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'blog:login' %}">Login</a>
+            </li>
+          {% endif %}
+
+          {% if active_navbar == 'signup' %}
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'blog:signup' %}">Sign up <span class="sr-only">(current)</span></a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'blog:signup' %}">Sign up</a>
+            </li>
+          {% endif %}
+
         {% endif %}
       </ul>
 

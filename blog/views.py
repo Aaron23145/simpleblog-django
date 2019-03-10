@@ -1,5 +1,6 @@
 from django.views import generic
 from django.contrib.auth import login
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm
@@ -17,6 +18,21 @@ class Index(generic.ListView):
     def get_queryset(self):
         return Entry.objects.order_by('-pub_date')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_navbar'] = 'home'
+        return context
+
+
+class Login(auth_views.LoginView):
+    template_name = 'blog/auth/login.html'
+    redirect_authenticated_user = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_navbar'] = 'login'
+        return context
+
 
 class Signup(generic.edit.FormView):
     template_name = 'blog/auth/signup.html'
@@ -27,6 +43,11 @@ class Signup(generic.edit.FormView):
         Profile.objects.create(user=user)
         login(self.request, user)
         return redirect('blog:index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_navbar'] = 'signup'
+        return context
 
 
 def editorcp_check(user):
