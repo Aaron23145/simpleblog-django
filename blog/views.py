@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.urls import reverse_lazy
 
-from .models import Entry, Profile
+from .models import Entry, Profile, Tag
 
 
 class Index(generic.ListView):
@@ -106,6 +106,54 @@ class EditorcpEditEntry(UserPassesTestMixin, generic.edit.UpdateView):
 class EditorcpDeleteEntry(UserPassesTestMixin, generic.edit.DeleteView):
     template_name = 'blog/editorcp/delete_entry.html'
     model = Entry
+    success_url = reverse_lazy('blog:editorcp')
+    login_url = 'blog:index'
+    redirect_field_name = None
+
+    def test_func(self):
+        return editorcp_check(self.request.user)
+
+
+class EditorcpCreateTag(UserPassesTestMixin, generic.edit.CreateView):
+    model = Tag
+    template_name = 'blog/editorcp/create_tag.html'
+    fields = ['name', 'description']
+    success_url = reverse_lazy('blog:editorcp')
+    login_url = 'blog:index'
+    redirect_field_name = None
+
+    def test_func(self):
+        return editorcp_check(self.request.user)
+
+
+class EditorcpListTags(UserPassesTestMixin, generic.ListView):
+    template_name = 'blog/editorcp/list_tags.html'
+    context_object_name = 'tag_list'
+    login_url = 'blog:index'
+    redirect_field_name = None
+
+    def get_queryset(self):
+        return Tag.objects.all()
+
+    def test_func(self):
+        return editorcp_check(self.request.user)
+
+
+class EditorcpEditTag(UserPassesTestMixin, generic.edit.UpdateView):
+    template_name = 'blog/editorcp/edit_tag.html'
+    model = Tag
+    success_url = reverse_lazy('blog:editorcp')
+    fields = ['name', 'description']
+    login_url = 'blog:index'
+    redirect_field_name = None
+
+    def test_func(self):
+        return editorcp_check(self.request.user)
+
+
+class EditorcpDeleteTag(UserPassesTestMixin, generic.edit.DeleteView):
+    template_name = 'blog/editorcp/delete_tag.html'
+    model = Tag
     success_url = reverse_lazy('blog:editorcp')
     login_url = 'blog:index'
     redirect_field_name = None

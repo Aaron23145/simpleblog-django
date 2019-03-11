@@ -1,0 +1,37 @@
+{% extends 'blog/base/editorcp.html' %}
+
+{% block title %}
+  Edit or Remove Tags - {{ block.super }}
+{% endblock title %}
+
+{% block h1 %}
+  Edit or remove Tags
+{% endblock h1 %}
+
+{% block content %}
+  <div class="table-responsive">
+    <table class="table table-borderless table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for tag in tag_list %}
+          <tr>
+            <td>{{ tag.id }}</td>
+            <td>{{ tag.name }}</td>
+            <td>{{ tag.description }}</td>
+            <td>
+              <a href="{% url 'blog:edit_tag' tag.pk %}"><i class="fas fa-edit"></i></a>
+              <a href="{% url 'blog:delete_tag' tag.pk %}"><i class="fas fa-trash-alt"></i></a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}

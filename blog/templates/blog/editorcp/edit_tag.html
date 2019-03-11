@@ -1,0 +1,36 @@
+{% extends 'blog/base/editorcp.html' %}
+
+{% block title %}
+  Edit Tag - {{ block.super }}
+{% endblock title %}
+
+{% block h1 %}
+  Edit tag
+{% endblock h1 %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="form-group row align-items-center">
+      <label class="col-sm-2 col-form-label" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" value="{{ form.name.value|default_if_none:'' }}" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" required autofocus>
+      </div>
+      {{ form.name.errors }}
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="col-sm-2 col-form-label" for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+      <div class="col-sm-9">
+        <textarea type="text" class="form-control" name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" rows="5" required>{{ form.description.value|default_if_none:'' }}</textarea>
+      </div>
+      {{ form.description.errors }}
+    </div>
+
+    <div class="form-group text-center">
+        <input class="btn btn-primary" type="submit" value="Save Tag">
+    </div>
+  
+  </form>
+{% endblock content %}
