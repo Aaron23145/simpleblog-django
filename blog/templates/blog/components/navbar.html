@@ -33,7 +33,7 @@
               <a class="nav-link" href="{% url 'admin:index' %}">Admin CP</a>
             </li>
           {% endif %}
-          {% if user.profile.can_access_ecp %}
+          {% if user.profile.is_editor or user.is_staff or user.is_superuser %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'blog:editorcp' %}">Editor CP</a>
             </li>

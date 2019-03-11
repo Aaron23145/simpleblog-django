@@ -13,12 +13,13 @@ class Tag(models.Model):
 
 class Entry(models.Model):
     """Any entry of the blog."""
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=50)
     content = models.TextField()
     summary = models.TextField()
     pub_date = models.DateTimeField('date published')
     tag = models.ManyToManyField(Tag, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    slug = models.SlugField()
 
     def __str__(self):
         return f'{self.title} by {self.author}: {self.summary[:10]}'

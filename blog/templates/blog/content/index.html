@@ -10,7 +10,9 @@
   {% for entry in latest_entries_list %}
     <article>
       <div class="row">
-        <h2 class="entry-title col-12 col-xl-8"><a href="#">{{ entry.title }}</a></h2>
+        <h2 class="entry-title col-12 col-xl-8">
+          <a href="{% url 'blog:view_entry' entry.pk entry.slug %}">{{ entry.title }}</a>
+        </h2>
         <p class="entry-info col align-self-end">
           At {{ entry.pub_date }} by 
           <a class="entry-author" href="#">{{ entry.author }}</a>

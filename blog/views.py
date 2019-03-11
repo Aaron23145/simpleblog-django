@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.utils import timezone
+from django.utils.text import slugify
 from django.urls import reverse_lazy
 
 from .models import Entry, Profile, Tag
@@ -51,7 +52,15 @@ class Signup(generic.edit.FormView):
 
 
 def editorcp_check(user):
-    return user.is_authenticated and user.profile.can_access_ecp()
+    if not user.is_authenticated:
+        return False
+
+    try:
+        user.profile
+    except:
+        return user.is_staff or user.is_superuser
+    else:
+        return user.profile.can_access_ecp()
 
 
 @user_passes_test(editorcp_check, login_url='blog:index', redirect_field_name=None)
@@ -70,6 +79,7 @@ class EditorcpCreateEntry(UserPassesTestMixin, generic.edit.CreateView):
         entry = form.save(commit=False)
         entry.pub_date = timezone.now()
         entry.author = self.request.user
+        entry.slug = slugify(entry.title)
         entry.save()
         form.save_m2m()
         return redirect('blog:editorcp')
@@ -94,10 +104,15 @@ class EditorcpListEntries(UserPassesTestMixin, generic.ListView):
 class EditorcpEditEntry(UserPassesTestMixin, generic.edit.UpdateView):
     template_name = 'blog/editorcp/edit_entry.html'
     model = Entry
-    success_url = reverse_lazy('blog:editorcp')
     fields = ['title', 'summary', 'content', 'tag']
     login_url = 'blog:index'
     redirect_field_name = None
+
+    def form_valid(self, form):
+        entry = form.save(commit=False)
+        entry.slug = slugify(entry.title)
+        entry.save()
+        return redirect('blog:editorcp')
 
     def test_func(self):
         return editorcp_check(self.request.user)
@@ -160,3 +175,12 @@ class EditorcpDeleteTag(UserPassesTestMixin, generic.edit.DeleteView):
 
     def test_func(self):
         return editorcp_check(self.request.user)
+
+
+def blog_entry(request, pk, slug):
+    entry = Entry.objects.get(pk=pk)
+
+    if entry.slug != slug:
+        return redirect('blog:view_entry', pk=pk, slug=entry.slug)
+
+    return render(request, 'blog/content/entry.html', {'entry': entry})

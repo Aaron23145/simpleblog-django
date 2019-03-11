@@ -26,6 +26,7 @@ EDITORCP_PATTERNS = [
 app_name = 'blog'
 urlpatterns = [
     path('', views.Index.as_view(), name='index'),
+    path('entry/<int:pk>/<slug:slug>/', views.blog_entry, name='view_entry'),
     path('', include(AUTH_PATTERNS)),
     path('editorcp/', include(EDITORCP_PATTERNS)),
 ]
