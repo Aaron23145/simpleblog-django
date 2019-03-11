@@ -14,6 +14,13 @@
   {% include 'blog/components/sidebar.html' %}
 
   <div class="ecp-content">
+    <div class="title-container">
+      <h1>
+        {% block h1 %}
+        {% endblock h1 %}
+      </h1>
+    </div>
+
     {% block content %}
     {% endblock content %}
   <div>

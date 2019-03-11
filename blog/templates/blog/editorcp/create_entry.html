@@ -4,6 +4,10 @@
   Create Entry - {{ block.super }}
 {% endblock title %}
 
+{% block h1 %}
+  Create new entry
+{% endblock h1 %}
+
 {% block content %}
   <form method="post">
     {% csrf_token %}

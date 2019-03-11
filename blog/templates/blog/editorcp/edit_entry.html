@@ -4,6 +4,10 @@
   Edit Entry - {{ block.super }}
 {% endblock title %}
 
+{% block h1 %}
+  Edit entry
+{% endblock h1 %}
+
 {% block content %}
   <form method="post">
     {% csrf_token %}

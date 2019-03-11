@@ -5,6 +5,8 @@
 {% endblock title %}
 
 {% block content %}
+  <h1 class="d-none">Login</h1>
+
   {% if form.errors %}
     <p>Your username and password didn't match. Please try again.</p>
   {% endif %}
@@ -20,21 +22,27 @@
 
   <form method="post" action="{% url 'blog:login' %}">
     {% csrf_token %}
-    {{ form.username.errors }}
-    <div class="d-flex flex-column flex-md-row align-items-center mt-2">
-      <label class="mr-3" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
-      <input class="flex-grow-1" type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}" autofocus required>
+
+    <div class="form-group row align-items-center">
+      <label class="ml-1 ml-sm-0 col-sm-3 col-form-label" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+      <div class="col-sm-9">
+        <input class="form-control" type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}" placeholder="Username" required autofocus>
+      </div>
+      {{ form.username.errors }}
     </div>
 
-    {{ form.password.errors }}
-    <div class="d-flex flex-column flex-md-row align-items-center mt-2">
-      <label class="mr-3" for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
-      <input class="flex-grow-1" type="password" name="{{ form.password.name }}" id="{{ form.password.id_for_label }}" required>
+    <div class="form-group row align-items-center">
+      <label class="ml-1 ml-sm-0 col-sm-3 col-form-label" for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+      <div class="col-sm-9">
+        <input class="form-control" type="password" name="{{ form.password.name }}" id="{{ form.password.id_for_label }}" placeholder="Password" required>
+      </div>
+      {{ form.password.errors }}
+    </div>
+    
+    <div class="form-group text-center">
+        <input class="btn btn-primary" type="submit" value="Login">
     </div>
 
-    <div class="text-center mt-2">
-      <input type="submit" value="Login" />
-    </div
-    <input type="hidden" name="next" value="{{ next }}" />
+    <input type="hidden" name="next" value="{{ next }}">
   </form>
 {% endblock content %}

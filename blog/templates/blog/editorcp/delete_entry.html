@@ -1,8 +1,12 @@
 {% extends 'blog/base/editorcp.html' %}
 
 {% block title %}
-  Edit Entry - {{ block.super }}
+  Delete Entry - {{ block.super }}
 {% endblock title %}
+
+{% block h1 %}
+  Delete entry titled {{ object.title }}?
+{% endblock h1 %}
 
 {% block content %}
   <form method="post">
