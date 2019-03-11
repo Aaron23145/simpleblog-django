@@ -39,3 +39,39 @@ h6 {
   text-decoration: none;
   border-bottom: 2px solid var(--main-blue);
 }
+
+.errorlist {
+  margin-top: 5px;
+  list-style-type: none;
+}
+
+.form-control:focus {
+  border-color: var(--main-blue);
+  box-shadow: 0 0 0 .2rem var(--main-light-blue);
+}
+
+.btn-primary {
+  border: none;
+  background-color: var(--main-blue);
+}
+
+.btn-primary:hover {
+  background-color: var(--main-dark-blue);
+}
+
+.btn-primary:not(:disabled):not(.disabled):active {
+  background-color: var(--main-dark-blue);
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 .2rem var(--main-light-blue);
+}
+
+.form-text ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.form-text ul li {
+  margin-top: 5px;
+}

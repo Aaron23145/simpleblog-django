@@ -26,7 +26,7 @@
     <div class="form-group row align-items-center">
       <label class="ml-1 ml-sm-0 col-sm-3 col-form-label" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
       <div class="col-sm-9">
-        <input class="form-control" type="text" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}" placeholder="Username" required autofocus>
+        <input class="form-control" type="text" value="{{ form.username.value|default_if_none:'' }}" name="{{ form.username.name }}" id="{{ form.username.id_for_label }}" placeholder="Username" required autofocus>
       </div>
       {{ form.username.errors }}
     </div>

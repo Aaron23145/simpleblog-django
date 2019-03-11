@@ -11,7 +11,33 @@
 {% block content %}
   <form method="post">
     {% csrf_token %}
-    <p>Are you sure you want to delete {{ object }}?</p>
-    <input type="submit" value="Confirm">
+
+    <div class="form-group">
+      <p>Are you sure you want to delete this entry?</p>
+      <div class="table-responsive">
+        <table class="table table-borderless">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Date Published</th>
+            </tr>  
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ object.id }}</td>
+              <td>{{ object.title }}</td>
+              <td>{{ object.author }}</td>
+              <td>{{ object.pub_date }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input class="btn btn-primary" type="submit" value="Delete {{ object.title }}">
+    </div>
   </form>
 {% endblock content %}

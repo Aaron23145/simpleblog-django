@@ -9,15 +9,31 @@
 {% endblock h1 %}
 
 {% block content %}
-  <ul>
-  {% for entry in latest_entries_list %}
-    <li>
-        <a href="{% url 'blog:edit_entry' entry.pk %}">{{ entry.title }}</a>
-        published by
-        <a>{{ entry.author }}</a>
-        at {{ entry.pub_date }}.
-        <a href="{% url 'blog:delete_entry' entry.pk %}">Delete</a>
-    </li>
-  {% endfor %}
-  </ul>
+  <div class="table-responsive">
+    <table class="table table-borderless table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+          <th scope="col">Date Published</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for entry in latest_entries_list %}
+          <tr>
+            <td>{{ entry.id }}</td>
+            <td>{{ entry.title }}</td>
+            <td>{{ entry.author }}</td>
+            <td>{{ entry.pub_date }}</td>
+            <td>
+              <a href="{% url 'blog:edit_entry' entry.pk %}"><i class="fas fa-edit"></i></a>
+              <a href="{% url 'blog:delete_entry' entry.pk %}"><i class="fas fa-trash-alt"></i></a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock content %}

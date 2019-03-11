@@ -14,6 +14,16 @@
   font-size: 1.5rem;
 }
 
+.col-form-label {
+  text-align: center;
+}
+
+@media (min-width: 576px) {
+  .col-form-label {
+    text-align: left;
+  }
+}
+
 @media (min-width: 992px) {
   .ecp-content {
     margin-left: var(--sidebar-width);
@@ -29,4 +39,8 @@
     width: 90%;
     margin: 0 auto;
   }
+}
+
+.table {
+  white-space: nowrap;
 }

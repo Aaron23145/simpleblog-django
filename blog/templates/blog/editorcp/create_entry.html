@@ -11,7 +11,50 @@
 {% block content %}
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Create">
+
+    <div class="form-group row align-items-center">
+      <label class="col-sm-2 col-form-label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" value="{{ form.title.value|default_if_none:'' }}" name="{{ form.title.name }}" id="{{ form.title.id_for_label }}" required autofocus>
+      </div>
+      {{ form.title.errors }}
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="col-sm-2 col-form-label" for="{{ form.summary.id_for_label }}">{{ form.summary.label }}</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" value="{{ form.summary.value|default_if_none:'' }}" name="{{ form.summary.name }}" id="{{ form.summary.id_for_label }}" required>
+      </div>
+      {{ form.summary.errors }}
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="col-sm-2 col-form-label" for="{{ form.content.id_for_label }}">{{ form.content.label }}</label>
+      <div class="col-sm-9">
+        <textarea type="text" class="form-control" name="{{ form.content.name }}" id="{{ form.content.id_for_label }}" rows="5" required>{{ form.content.value|default_if_none:'' }}</textarea>
+      </div>
+      {{ form.content.errors }}
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="col-sm-2 col-form-label" for="{{ form.tag.id_for_label }}">{{ form.tag.label }}</label>
+      <div class="col-sm-9">
+        <select class="form-control" name="{{ form.tag.name }}" id="{{ form.tag.id_for_label }}" multiple>
+          {% for value, text in form.tag.field.choices %}
+            {% if value in form.tag.value or value|stringformat:'i' in form.tag.value %}
+              <option value="{{ value }}" selected>{{ text }}</option>
+            {% else %}
+              <option value="{{ value }}">{{ text }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      {{ form.tag.errors }}
+    </div>
+
+    <div class="form-group text-center">
+        <input class="btn btn-primary" type="submit" value="Create Entry">
+    </div>
+
   </form>
 {% endblock content %}
