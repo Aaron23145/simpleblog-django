@@ -38,3 +38,13 @@ class Profile(models.Model):
 
     def can_access_ecp(self):
         return self.user.is_staff or self.user.is_superuser or self.is_editor
+
+
+class ImportantEntry(models.Model):
+    """Important entries that will be displayed in the carousel."""
+    entry = models.OneToOneField(Entry, on_delete=models.CASCADE)
+    image_name = models.CharField(max_length=50)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name_plural = 'important entries'

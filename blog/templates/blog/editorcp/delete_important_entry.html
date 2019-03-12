@@ -1,11 +1,11 @@
 {% extends 'blog/base/editorcp.html' %}
 
 {% block title %}
-  Delete Tag - {{ block.super }}
+  Delete Important Entry - {{ block.super }}
 {% endblock title %}
 
 {% block h1 %}
-  Delete tag titled {{ object.name }}?
+  Delete important entry assigned to {{ object.entry.title }}?
 {% endblock h1 %}
 
 {% block content %}
@@ -13,21 +13,23 @@
     {% csrf_token %}
 
     <div class="form-group">
-      <p>Are you sure you want to delete this tag?</p>
+      <p>Are you sure you want to delete this important entry?</p>
       <div class="table-responsive">
         <table class="table table-borderless">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Description</th>
+              <th scope="col">Entry</th>
+              <th scope="col">Image Name</th>
+              <th scope="col">Active</th>
             </tr>  
           </thead>
           <tbody>
             <tr>
               <td>{{ object.id }}</td>
-              <td>{{ object.name }}</td>
-              <td>{{ object.description }}</td>
+              <td>{{ object.entry.title }}</td>
+              <td>{{ object.image_name }}</td>
+              <td>{{ object.active }}</td>
             </tr>
           </tbody>
         </table>
@@ -35,7 +37,7 @@
     </div>
 
     <div class="form-group">
-      <input class="btn btn-primary" type="submit" value="Delete {{ object.name }}">
+      <input class="btn btn-primary" type="submit" value="Delete {{ object.entry.title }}">
     </div>
   </form>
 {% endblock content %}

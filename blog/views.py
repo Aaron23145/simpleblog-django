@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.urls import reverse_lazy
 
-from .models import Entry, Profile, Tag
+from .models import Entry, Profile, Tag, ImportantEntry
 
 
 class Index(generic.ListView):
@@ -185,3 +185,51 @@ def blog_entry(request, pk, slug):
         return redirect('blog:view_entry', pk=pk, slug=entry.slug)
 
     return render(request, 'blog/content/entry.html', {'entry': entry})
+
+
+class EditorcpCreateImportantEntry(UserPassesTestMixin, generic.edit.CreateView):
+    template_name = 'blog/editorcp/create_important_entry.html'
+    model = ImportantEntry
+    fields = ['entry', 'image_name']
+    success_url = reverse_lazy('blog:editorcp')
+    login_url = 'blog:index'
+    redirect_field_name = None
+
+    def test_func(self):
+        return editorcp_check(self.request.user)
+
+
+class EditorcpListImportantEntries(UserPassesTestMixin, generic.ListView):
+    template_name = 'blog/editorcp/list_important_entries.html'
+    context_object_name = 'important_entries_list'
+    login_url = 'blog:index'
+    redirect_field_name = None
+
+    def get_queryset(self):
+        return ImportantEntry.objects.all()
+
+    def test_func(self):
+        return editorcp_check(self.request.user)
+
+
+class EditorcpEditImportantEntry(UserPassesTestMixin, generic.edit.UpdateView):
+    template_name = 'blog/editorcp/edit_important_entry.html'
+    model = ImportantEntry
+    success_url = reverse_lazy('blog:editorcp')
+    fields = ['entry', 'image_name', 'active']
+    login_url = 'blog:index'
+    redirect_field_name = None
+
+    def test_func(self):
+        return editorcp_check(self.request.user)
+
+
+class EditorcpDeleteImportantEntry(UserPassesTestMixin, generic.edit.DeleteView):
+    template_name = 'blog/editorcp/delete_important_entry.html'
+    model = ImportantEntry
+    success_url = reverse_lazy('blog:editorcp')
+    login_url = 'blog:index'
+    redirect_field_name = None
+
+    def test_func(self):
+        return editorcp_check(self.request.user)

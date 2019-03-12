@@ -1,0 +1,44 @@
+{% extends 'blog/base/editorcp.html' %}
+
+{% block title %}
+  Create Important Entry - {{ block.super }}
+{% endblock title %}
+
+{% block h1 %}
+  Create new important entry
+{% endblock h1 %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="form-group row align-items-center">
+      <label class="col-sm-2 col-form-label" for="{{ form.entry.id_for_label }}">{{ form.entry.label }}</label>
+      <div class="col-sm-9">
+        <select class="form-control" name="{{ form.entry.name }}" id="{{ form.entry.id_for_label }}" required autofocus>
+          {% for value, text in form.entry.field.choices %}
+            {% if value in form.entry.value or value|stringformat:'i' in form.entry.value %}
+              <option value="{{ value }}" selected>{{ text }}</option>
+            {% else %}
+              <option value="{{ value }}">{{ text }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      {{ form.entry.errors }}
+    </div>
+
+    <div class="form-group row align-items-center">
+      <label class="col-sm-2 col-form-label" for="{{ form.image_name.id_for_label }}">{{ form.image_name.label }}</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" value="{{ form.image_name.value|default_if_none:'' }}" name="{{ form.image_name.name }}" id="{{ form.image_name.id_for_label }}" required>
+      </div>
+      {{ form.image_name.errors }}
+    </div>
+
+    <div class="form-group text-center">
+        <input class="btn btn-primary" type="submit" value="Create Important Entry">
+    </div>
+
+  </form>
+{% endblock content %}

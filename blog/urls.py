@@ -21,6 +21,10 @@ EDITORCP_PATTERNS = [
     path('tags/new/', views.EditorcpCreateTag.as_view(), name='create_tag'),
     path('tags/<int:pk>/', views.EditorcpEditTag.as_view(), name='edit_tag'),
     path('tags/<int:pk>/remove/', views.EditorcpDeleteTag.as_view(), name='delete_tag'),
+    path('important_entries/', views.EditorcpListImportantEntries.as_view(), name='list_important_entries'),
+    path('important_entries/new/', views.EditorcpCreateImportantEntry.as_view(), name='create_important_entry'),
+    path('important_entries/<int:pk>/', views.EditorcpEditImportantEntry.as_view(), name='edit_important_entry'),
+    path('important_entries/<int:pk>/remove/', views.EditorcpDeleteImportantEntry.as_view(), name='delete_important_entry'),
 ]
 
 app_name = 'blog'

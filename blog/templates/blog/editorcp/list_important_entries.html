@@ -1,0 +1,39 @@
+{% extends 'blog/base/editorcp.html' %}
+
+{% block title %}
+  Edit or Remove Important Entries - {{ block.super }}
+{% endblock title %}
+
+{% block h1 %}
+  Edit or remove important entries
+{% endblock h1 %}
+
+{% block content %}
+  <div class="table-responsive">
+    <table class="table table-borderless table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Entry</th>
+          <th scope="col">Image Name</th>
+          <th scope="col">Active</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for important_entry in important_entries_list %}
+          <tr>
+            <td>{{ important_entry.id }}</td>
+            <td>{{ important_entry.entry.title }}</td>
+            <td>{{ important_entry.image_name }}</td>
+            <td>{{ important_entry.active }}</td>
+            <td>
+              <a href="{% url 'blog:edit_important_entry' important_entry.pk %}"><i class="fas fa-edit"></i></a>
+              <a href="{% url 'blog:delete_important_entry' important_entry.pk %}"><i class="fas fa-trash-alt"></i></a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}
