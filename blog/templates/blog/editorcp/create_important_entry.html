@@ -12,6 +12,8 @@
   <form method="post">
     {% csrf_token %}
 
+    <p>Set an entry as important. This means that it will be displayed in all the blog pages as a carousel diapositive. Although the carousel will not appear in mobile sized screens or when there is not any important entry.</p>
+
     <div class="form-group row align-items-center">
       <label class="col-sm-2 col-form-label" for="{{ form.entry.id_for_label }}">{{ form.entry.label }}</label>
       <div class="col-sm-9">
@@ -25,6 +27,9 @@
           {% endfor %}
         </select>
       </div>
+      <small class="mx-4 form-text text-muted">
+        {{ form.entry.help_text }}
+      </small>
       {{ form.entry.errors }}
     </div>
 
@@ -33,6 +38,9 @@
       <div class="col-sm-9">
         <input type="text" class="form-control" value="{{ form.image_name.value|default_if_none:'' }}" name="{{ form.image_name.name }}" id="{{ form.image_name.id_for_label }}" required>
       </div>
+      <small class="mx-4 form-text text-muted">
+        {{ form.image_name.help_text }}
+      </small>
       {{ form.image_name.errors }}
     </div>
 

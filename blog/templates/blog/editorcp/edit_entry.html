@@ -25,6 +25,9 @@
       <div class="col-sm-9">
         <input type="text" class="form-control" value="{{ form.summary.value|default_if_none:'' }}" name="{{ form.summary.name }}" id="{{ form.summary.id_for_label }}" required>
       </div>
+      <small class="mx-4 form-text text-muted">
+        {{ form.summary.help_text }}
+      </small>
       {{ form.summary.errors }}
     </div>
 

@@ -21,6 +21,7 @@ class Index(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         context['active_navbar'] = 'home'
         context['important_entries'] = ImportantEntry.objects.filter(active=True)
         return context
@@ -66,7 +67,19 @@ def editorcp_check(user):
 
 @user_passes_test(editorcp_check, login_url='blog:index', redirect_field_name=None)
 def editorcp_index(request):
-    return render(request, 'blog/editorcp/index.html')
+    context = {
+        'alerts': {
+            'no_important_entries': False,
+        },
+    }
+
+    important_entries = ImportantEntry.objects.all()
+    active_important_entries = ImportantEntry.objects.filter(active=True)
+
+    if important_entries.count() == 0 or active_important_entries.count() == 0:
+        context['alerts']['no_important_entries'] = True
+
+    return render(request, 'blog/editorcp/index.html', context)
 
 
 class EditorcpCreateEntry(UserPassesTestMixin, generic.edit.CreateView):

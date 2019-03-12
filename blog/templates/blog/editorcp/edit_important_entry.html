@@ -25,6 +25,9 @@
           {% endfor %}
         </select>
       </div>
+      <small class="mx-4 form-text text-muted">
+        {{ form.entry.help_text }}
+      </small>
       {{ form.entry.errors }}
     </div>
 
@@ -33,6 +36,9 @@
       <div class="col-sm-9">
         <input type="text" class="form-control" value="{{ form.image_name.value|default_if_none:'' }}" name="{{ form.image_name.name }}" id="{{ form.image_name.id_for_label }}" required>
       </div>
+      <small class="mx-4 form-text text-muted">
+        {{ form.image_name.help_text }}
+      </small>
       {{ form.image_name.errors }}
     </div>
 
@@ -45,6 +51,9 @@
           <input type="checkbox" name="{{ form.active.name }}" id="{{ form.active.id_for_label }}">
         {% endif %}
       </div>
+      <small class="mx-4 form-text text-muted">
+        {{ form.active.help_text }}
+      </small>
     </div>
 
     <div class="form-group text-center">

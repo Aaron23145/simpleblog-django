@@ -9,4 +9,23 @@
 {% endblock h1 %}
 
 {% block content %}
+{% if alerts.no_important_entries %}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    You have not set any entry as important. Because of this, the carousel of the blog pages can not appear. If you want to make it appear, mark any entry as important.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+{% endif %}
+
+<h2>EditorCP's Overview</h2>
+<br><br>
+<h3>Entries management</h3>
+The core of this very simple CMS. Entries will help you informing your visitors constantly. An entry can have multiple tags and be marked as important.
+<br><br>
+<h3>Tags management</h3>
+A very basic model that will help you describing your entries.
+<br><br>
+<h3>Important Entries management</h3>
+If you want to make an entry stand out from the rest this is what you need. Marking and entry as important will make it appear as a diapositive in the carousel that is displayed in all blog views. Keep in mind that the carousel is only displayed in tablet and desktop screen sizes.
 {% endblock content %}

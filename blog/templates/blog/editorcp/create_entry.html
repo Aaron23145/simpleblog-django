@@ -12,6 +12,8 @@
   <form method="post">
     {% csrf_token %}
 
+    <p>Create a new entry to inform the visitors of your website about whatever you want.</p>
+
     <div class="form-group row align-items-center">
       <label class="col-sm-2 col-form-label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
       <div class="col-sm-9">
@@ -25,6 +27,9 @@
       <div class="col-sm-9">
         <input type="text" class="form-control" value="{{ form.summary.value|default_if_none:'' }}" name="{{ form.summary.name }}" id="{{ form.summary.id_for_label }}" required>
       </div>
+      <small class="mx-4 form-text text-muted">
+        {{ form.summary.help_text }}
+      </small>
       {{ form.summary.errors }}
     </div>
 

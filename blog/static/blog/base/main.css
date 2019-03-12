@@ -75,3 +75,7 @@ h6 {
 .form-text ul li {
   margin-top: 5px;
 }
+
+.alert {
+  width: 90%;
+}
