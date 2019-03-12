@@ -1,0 +1,46 @@
+:root {
+  --sidebar-width: 350px;
+}
+
+.title-container {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.title-container h1 {
+  display: inline;
+  border-bottom: 4px solid var(--main-blue);
+  font-size: 1.5rem;
+}
+
+.col-form-label {
+  text-align: center;
+}
+
+@media (min-width: 576px) {
+  .col-form-label {
+    text-align: left;
+  }
+}
+
+@media (min-width: 992px) {
+  .ecp-content {
+    margin-left: var(--sidebar-width);
+  }
+
+  .title-container {
+    text-align: left;
+  }
+
+  .title-container h1 {
+    font-size: 2.5rem;
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+.table {
+  white-space: nowrap;
+}

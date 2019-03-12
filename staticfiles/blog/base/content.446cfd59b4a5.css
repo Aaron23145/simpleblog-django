@@ -1,0 +1,29 @@
+.main-content {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.entry-title {
+  display: inline;
+}
+
+.entry-title a,
+.entry-title span {
+  padding: 0 10px;
+  border-bottom: 4px solid var(--main-blue);
+}
+
+.entry-title a:hover {
+  border-bottom-width: 4px;
+}
+
+.entry-info {
+  margin-bottom: 0;
+}
+
+p.entry-summary {
+  font-family: 'Bree Serif', serif;
+  font-size: 1.3rem;
+  color: rgba(0, 0, 0, .6);
+  margin-bottom: 30px;
+}
