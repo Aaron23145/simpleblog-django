@@ -1,6 +1,6 @@
 {% load static %}
 
-<div class="position-relative">
+<div class="position-relative d-none d-md-block">
   <div id="mainCarousel" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
       <li data-target="#mainCarousel" data-slide-to="0" class="active"></li>
@@ -11,7 +11,7 @@
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="{% static 'blog/images/carousel-1.jpeg' %}" class="d-block w-100" alt="">
-        <div class="carousel-caption d-none d-md-block">
+        <div class="carousel-caption">
           <h5>Latest entry of the blog</h5>
           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
         </div>
