@@ -1,14 +1,16 @@
 .main-content {
   margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .entry-title {
   display: inline;
 }
 
-.entry-title a {
-  border-bottom: 4px solid var(--main-blue);
+.entry-title a,
+.entry-title span {
   padding: 0 10px;
+  border-bottom: 4px solid var(--main-blue);
 }
 
 .entry-title a:hover {

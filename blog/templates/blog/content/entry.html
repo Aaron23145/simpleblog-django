@@ -1,9 +1,24 @@
 {% extends 'blog/base/content.html' %}
 
 {% block title %}
-  Index - {{ block.super }}
+  {{ entry.title }} - {{ block.super }}
 {% endblock title %}
 
 {% block content %}
-  {{ entry }}
+  <article>
+    <div class="row">
+      <h2 class="entry-title col-12 col-xl-8"><span>{{ entry.title }}</span></h2>
+      <p class="entry-info col align-self-end">
+        At {{ entry.pub_date }} by 
+        <a class="entry-author" href="#">{{ entry.author }}</a>
+      </p>
+    </div>
+    <p class="entry-summary">{{ entry.summary }}</p>
+    <p>{{ entry.content }}</p>
+    <div class="mt-2 text-right">
+    {% for tag in entry.tag.all %}
+      <button class="btn btn-primary mx-1 btn-sm">{{ tag.name }}</button>
+    {% endfor %}
+    </div>
+  </article>
 {% endblock content %}

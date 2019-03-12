@@ -19,7 +19,19 @@
         </p>
       </div>
       <p class="entry-summary">{{ entry.summary }}</p>
-      <p>{{ entry.content }}</p>
+      {% if entry.content|length >= 2000 %}
+        <p class="mb-0">{{ entry.content|truncatechars:2000 }}</p>
+        <a href="{% url 'blog:view_entry' entry.pk entry.slug %}">Read more...</a>
+      {% else %}
+        <p>{{ entry.content|truncatechars:2000 }}</p>
+      {% endif %}
+      {% if entry.tag.all|length %}
+        <div class="my-2 text-right">
+        {% for tag in entry.tag.all %}
+          <button class="btn btn-primary mt-1 mb-5 btn-sm">{{ tag.name }}</button>
+        {% endfor %}
+        </div>
+      {% endif %}
     </article>
   {% endfor %}
 {% endblock content %}

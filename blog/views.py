@@ -112,6 +112,7 @@ class EditorcpEditEntry(UserPassesTestMixin, generic.edit.UpdateView):
         entry = form.save(commit=False)
         entry.slug = slugify(entry.title)
         entry.save()
+        form.save_m2m()
         return redirect('blog:editorcp')
 
     def test_func(self):
