@@ -4,9 +4,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'g9(%-f&xi(%px0_^1(rg1kdmgxc%&65_@yl@if1$ew80p^#v_$'
 
-DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['simpleblog-django.herokuapp.com', '127.0.0.1', 'localhost']
 
 ADMINS = [
     ('Aaron', 'aaronarrieropelaez99@gmail.com')
