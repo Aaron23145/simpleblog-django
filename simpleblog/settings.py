@@ -2,7 +2,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 'g9(%-f&xi(%px0_^1(rg1kdmgxc%&65_@yl@if1$ew80p^#v_$'
+SECRET_KEY = os.environ.get('DJANGO_SIMPLEBLOG_SECRET_KEY')
 
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
