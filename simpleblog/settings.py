@@ -6,7 +6,7 @@ SECRET_KEY = 'g9(%-f&xi(%px0_^1(rg1kdmgxc%&65_@yl@if1$ew80p^#v_$'
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 ADMINS = [
     ('Aaron', 'aaronarrieropelaez99@gmail.com')
