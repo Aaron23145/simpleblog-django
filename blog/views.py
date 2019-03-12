@@ -22,6 +22,7 @@ class Index(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['active_navbar'] = 'home'
+        context['important_entries'] = ImportantEntry.objects.filter(active=True)
         return context
 
 
@@ -184,7 +185,11 @@ def blog_entry(request, pk, slug):
     if entry.slug != slug:
         return redirect('blog:view_entry', pk=pk, slug=entry.slug)
 
-    return render(request, 'blog/content/entry.html', {'entry': entry})
+    context = {
+        'entry': entry,
+        'important_entries': ImportantEntry.objects.filter(active=True),
+    }
+    return render(request, 'blog/content/entry.html', context)
 
 
 class EditorcpCreateImportantEntry(UserPassesTestMixin, generic.edit.CreateView):

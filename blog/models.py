@@ -46,5 +46,8 @@ class ImportantEntry(models.Model):
     image_name = models.CharField(max_length=50)
     active = models.BooleanField(default=True)
 
+    def get_image_url(self):
+        return f'blog/images/{self.image_name}'
+
     class Meta:
         verbose_name_plural = 'important entries'
