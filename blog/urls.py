@@ -31,6 +31,10 @@ EDITORCP_PATTERNS = [
 app_name = 'blog'
 urlpatterns = [
     path('', views.Index.as_view(), name='index'),
+    path('about/', views.blog_about, name='about'),
+    path('contact/', views.blog_contact, name='contact'),
+    path('tag/<int:pk>/', views.BlogTag.as_view(), name='view_tag'),
+    path('user/<int:pk>/', views.BlogUser.as_view(), name='view_user'),
     path('entry/<int:pk>/<slug:slug>/', views.blog_entry, name='view_entry'),
     path('', include(AUTH_PATTERNS)),
     path('editorcp/', include(EDITORCP_PATTERNS)),

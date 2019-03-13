@@ -1,0 +1,22 @@
+{% extends 'blog/base/content.html' %}
+
+{% block title %}
+  {{ object.username }} -{{ block.super }}
+{% endblock title %}
+
+{% block content %}
+  <div class="row">
+    <h2 class="entry-title col-12 col-xl-8"><span>{{ object.username }}</span></h2>
+  </div>
+  {% if object.profile %}
+    {% if object.profile.is_editor %}
+      <p class="mt-5 mb-0">This user has is_editor set as true.</p>
+    {% else %}
+      <p class="mt-5 mb-0">This user has is_editor set as false.</p>
+    {% endif %}
+  {% else %}
+    <p class="mt-5 mb-0">User has not a defined profile. That usually happens when you create a user through the createsuperuser command. Try changing its profile in the django admin (for example, change its is_editor to True).</p>
+  {% endif %}
+  
+  </div>
+{% endblock content %}

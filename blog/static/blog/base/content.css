@@ -3,17 +3,21 @@
   margin-bottom: 50px;
 }
 
-.entry-title {
+.entry-title,
+.section-title {
   display: inline;
 }
 
 .entry-title a,
-.entry-title span {
+.entry-title span,
+.section-title a,
+.section-title span {
   padding: 0 10px;
   border-bottom: 4px solid var(--main-blue);
 }
 
-.entry-title a:hover {
+.entry-title a:hover,
+.section-title a:hover {
   border-bottom-width: 4px;
 }
 

@@ -1,0 +1,13 @@
+{% extends 'blog/base/content.html' %}
+
+{% block title %}
+  {{ object.name }} -{{ block.super }}
+{% endblock title %}
+
+{% block content %}
+  <div class="row">
+    <h2 class="entry-title col-12 col-xl-8"><span>{{ object.name }}</span></h2>
+  </div>
+  <p class="mt-5 mb-0">{{ object.description }}</p>
+  </div>
+{% endblock content %}

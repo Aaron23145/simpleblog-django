@@ -1,6 +1,7 @@
 from django.views import generic
 from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm
@@ -23,7 +24,8 @@ class Index(generic.ListView):
         context = super().get_context_data(**kwargs)
 
         context['active_navbar'] = 'home'
-        context['important_entries'] = ImportantEntry.objects.filter(active=True)
+        context['important_entries'] = ImportantEntry.objects.filter(
+            active=True)
         return context
 
 
@@ -81,7 +83,6 @@ def editorcp_index(request, success=None):
     def check_no_important_entries_active():
         return important_entries.count() == 0 or active_important_entries.count() == 0
 
-
     alerts = {
         'no_entries_created': {
             'show': check_no_entries_created(),
@@ -122,6 +123,37 @@ def editorcp_index(request, success=None):
     }
 
     return render(request, 'blog/editorcp/index.html', context)
+
+
+def blog_entry(request, pk, slug):
+    entry = Entry.objects.get(pk=pk)
+
+    if entry.slug != slug:
+        return redirect('blog:view_entry', pk=pk, slug=entry.slug)
+
+    context = {
+        'entry': entry,
+        'important_entries': ImportantEntry.objects.filter(active=True),
+    }
+    return render(request, 'blog/content/entry.html', context)
+
+
+class BlogTag(generic.DetailView):
+    model = Tag
+    template_name = 'blog/content/tag.html'
+
+
+class BlogUser(generic.DetailView):
+    model = User
+    template_name = 'blog/content/user.html'
+
+
+def blog_about(request):
+    return render(request, 'blog/content/about.html', {'active_navbar': 'about'})
+
+
+def blog_contact(request):
+    return render(request, 'blog/content/contact.html', {'active_navbar': 'contact'})
 
 
 class EditorcpCreateEntry(UserPassesTestMixin, generic.edit.CreateView):
@@ -234,24 +266,12 @@ class EditorcpDeleteTag(UserPassesTestMixin, generic.edit.DeleteView):
         return editorcp_check(self.request.user)
 
 
-def blog_entry(request, pk, slug):
-    entry = Entry.objects.get(pk=pk)
-
-    if entry.slug != slug:
-        return redirect('blog:view_entry', pk=pk, slug=entry.slug)
-
-    context = {
-        'entry': entry,
-        'important_entries': ImportantEntry.objects.filter(active=True),
-    }
-    return render(request, 'blog/content/entry.html', context)
-
-
 class EditorcpCreateImportantEntry(UserPassesTestMixin, generic.edit.CreateView):
     template_name = 'blog/editorcp/create_important_entry.html'
     model = ImportantEntry
     fields = ['entry', 'image_name']
-    success_url = reverse_lazy('blog:editorcp', args=('important_entry_created',))
+    success_url = reverse_lazy(
+        'blog:editorcp', args=('important_entry_created',))
     login_url = 'blog:index'
     redirect_field_name = None
 
@@ -275,7 +295,8 @@ class EditorcpListImportantEntries(UserPassesTestMixin, generic.ListView):
 class EditorcpEditImportantEntry(UserPassesTestMixin, generic.edit.UpdateView):
     template_name = 'blog/editorcp/edit_important_entry.html'
     model = ImportantEntry
-    success_url = reverse_lazy('blog:editorcp', args=('important_entry_edited',))
+    success_url = reverse_lazy(
+        'blog:editorcp', args=('important_entry_edited',))
     fields = ['entry', 'image_name', 'active']
     login_url = 'blog:index'
     redirect_field_name = None
@@ -287,7 +308,8 @@ class EditorcpEditImportantEntry(UserPassesTestMixin, generic.edit.UpdateView):
 class EditorcpDeleteImportantEntry(UserPassesTestMixin, generic.edit.DeleteView):
     template_name = 'blog/editorcp/delete_important_entry.html'
     model = ImportantEntry
-    success_url = reverse_lazy('blog:editorcp', args=('important_entry_deleted',))
+    success_url = reverse_lazy(
+        'blog:editorcp', args=('important_entry_deleted',))
     login_url = 'blog:index'
     redirect_field_name = None
 

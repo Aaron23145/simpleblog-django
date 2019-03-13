@@ -17,12 +17,24 @@
             <a class="nav-link" href="{% url 'blog:index' %}">Home</a>
           </li>
         {% endif %}
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
+        {% if active_navbar == 'about' %}
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'blog:about' %}">About</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'blog:about' %}">About</a>
+          </li>
+        {% endif %}
+        {% if active_navbar == 'contact' %}
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'blog:contact' %}">Contact</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'blog:contact' %}">Contact</a>
+          </li>
+        {% endif %}
 
       </ul>
 

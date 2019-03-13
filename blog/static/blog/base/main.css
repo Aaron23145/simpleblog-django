@@ -79,3 +79,13 @@ h6 {
 .alert {
   width: 90%;
 }
+
+a[type="button"] {
+  padding: 4px 8px;
+  color: white;
+  transition: background .5s;
+}
+
+a[type="button"]:hover {
+  color: white;
+}
