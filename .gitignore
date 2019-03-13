@@ -117,3 +117,7 @@ dmypy.json
 
 # VS Code
 .vscode/
+
+# static files generated necessary when ran with debug = False
+# Not necessary but prevention is better than cure
+staticfiles/
