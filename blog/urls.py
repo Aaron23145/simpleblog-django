@@ -13,6 +13,7 @@ AUTH_PATTERNS = [
 
 EDITORCP_PATTERNS = [
     path('', views.editorcp_index, name='editorcp'),
+    path('<str:success>', views.editorcp_index, name='editorcp'),
     path('entries/', views.EditorcpListEntries.as_view(), name='list_entries'),
     path('entries/new/', views.EditorcpCreateEntry.as_view(), name='create_entry'),
     path('entries/<int:pk>/', views.EditorcpEditEntry.as_view(), name='edit_entry'),
