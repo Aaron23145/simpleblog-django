@@ -6,8 +6,6 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from django.utils import timezone
-from django.utils.text import slugify
 from django.urls import reverse_lazy
 
 from .models import Entry, Profile, Tag, ImportantEntry
@@ -25,7 +23,8 @@ class Index(generic.ListView):
 
         context['active_navbar'] = 'home'
         context['important_entries'] = ImportantEntry.objects.filter(
-            active=True)
+            active=True
+        )
         return context
 
 
@@ -60,14 +59,43 @@ def editorcp_check(user):
         return False
 
     try:
-        user.profile
-    except:
-        return user.is_staff or user.is_superuser
-    else:
         return user.profile.can_access_ecp()
+    except AttributeError:
+        return user.is_staff or user.is_superuser
 
 
-@user_passes_test(editorcp_check, login_url='blog:index', redirect_field_name=None)
+def blog_entry(request, pk, slug):
+    entry = Entry.objects.get(pk=pk)
+
+    if entry.slug != slug:
+        return redirect('blog:view_entry', pk=pk, slug=entry.slug)
+
+    context = {
+        'entry': entry,
+        'important_entries': ImportantEntry.objects.filter(active=True),
+    }
+    return render(request, 'blog/content/entry.html', context)
+
+
+class BlogTag(generic.DetailView):
+    model = Tag
+    template_name = 'blog/content/tag.html'
+
+
+class BlogUser(generic.DetailView):
+    model = User
+    template_name = 'blog/content/user.html'
+
+
+def blog_about(request):
+    return render(request, 'blog/content/about.html', {'active_navbar': 'about'})
+
+
+def blog_contact(request):
+    return render(request, 'blog/content/contact.html', {'active_navbar': 'contact'})
+
+
+@user_passes_test(editorcp_check)
 def editorcp_index(request, success=None):
     entries = Entry.objects.all()
     tags = Tag.objects.all()
@@ -124,52 +152,15 @@ def editorcp_index(request, success=None):
 
     return render(request, 'blog/editorcp/index.html', context)
 
-
-def blog_entry(request, pk, slug):
-    entry = Entry.objects.get(pk=pk)
-
-    if entry.slug != slug:
-        return redirect('blog:view_entry', pk=pk, slug=entry.slug)
-
-    context = {
-        'entry': entry,
-        'important_entries': ImportantEntry.objects.filter(active=True),
-    }
-    return render(request, 'blog/content/entry.html', context)
-
-
-class BlogTag(generic.DetailView):
-    model = Tag
-    template_name = 'blog/content/tag.html'
-
-
-class BlogUser(generic.DetailView):
-    model = User
-    template_name = 'blog/content/user.html'
-
-
-def blog_about(request):
-    return render(request, 'blog/content/about.html', {'active_navbar': 'about'})
-
-
-def blog_contact(request):
-    return render(request, 'blog/content/contact.html', {'active_navbar': 'contact'})
-
-
 class EditorcpCreateEntry(UserPassesTestMixin, generic.edit.CreateView):
     model = Entry
     template_name = 'blog/editorcp/create_entry.html'
     fields = ['title', 'summary', 'content', 'tag']
-    login_url = 'blog:index'
-    redirect_field_name = None
 
     def form_valid(self, form):
         entry = form.save(commit=False)
-        entry.pub_date = timezone.now()
         entry.author = self.request.user
-        entry.slug = slugify(entry.title)
-        entry.save()
-        form.save_m2m()
+        form.save()
         return redirect('blog:editorcp', success='entry_created')
 
     def test_func(self):
@@ -179,8 +170,6 @@ class EditorcpCreateEntry(UserPassesTestMixin, generic.edit.CreateView):
 class EditorcpListEntries(UserPassesTestMixin, generic.ListView):
     template_name = 'blog/editorcp/list_entries.html'
     context_object_name = 'latest_entries_list'
-    login_url = 'blog:index'
-    redirect_field_name = None
 
     def get_queryset(self):
         return Entry.objects.order_by('-pub_date')
@@ -193,15 +182,7 @@ class EditorcpEditEntry(UserPassesTestMixin, generic.edit.UpdateView):
     template_name = 'blog/editorcp/edit_entry.html'
     model = Entry
     fields = ['title', 'summary', 'content', 'tag']
-    login_url = 'blog:index'
-    redirect_field_name = None
-
-    def form_valid(self, form):
-        entry = form.save(commit=False)
-        entry.slug = slugify(entry.title)
-        entry.save()
-        form.save_m2m()
-        return redirect('blog:editorcp', 'entry_edited')
+    success_url = reverse_lazy('blog:editorcp', args=('entry_edited',))
 
     def test_func(self):
         return editorcp_check(self.request.user)
@@ -211,8 +192,6 @@ class EditorcpDeleteEntry(UserPassesTestMixin, generic.edit.DeleteView):
     template_name = 'blog/editorcp/delete_entry.html'
     model = Entry
     success_url = reverse_lazy('blog:editorcp', args=('entry_deleted',))
-    login_url = 'blog:index'
-    redirect_field_name = None
 
     def test_func(self):
         return editorcp_check(self.request.user)
@@ -223,8 +202,6 @@ class EditorcpCreateTag(UserPassesTestMixin, generic.edit.CreateView):
     template_name = 'blog/editorcp/create_tag.html'
     fields = ['name', 'description']
     success_url = reverse_lazy('blog:editorcp', args=('tag_created',))
-    login_url = 'blog:index'
-    redirect_field_name = None
 
     def test_func(self):
         return editorcp_check(self.request.user)
@@ -233,8 +210,6 @@ class EditorcpCreateTag(UserPassesTestMixin, generic.edit.CreateView):
 class EditorcpListTags(UserPassesTestMixin, generic.ListView):
     template_name = 'blog/editorcp/list_tags.html'
     context_object_name = 'tag_list'
-    login_url = 'blog:index'
-    redirect_field_name = None
 
     def get_queryset(self):
         return Tag.objects.all()
@@ -248,8 +223,6 @@ class EditorcpEditTag(UserPassesTestMixin, generic.edit.UpdateView):
     model = Tag
     success_url = reverse_lazy('blog:editorcp', args=('tag_edited',))
     fields = ['name', 'description']
-    login_url = 'blog:index'
-    redirect_field_name = None
 
     def test_func(self):
         return editorcp_check(self.request.user)
@@ -259,8 +232,6 @@ class EditorcpDeleteTag(UserPassesTestMixin, generic.edit.DeleteView):
     template_name = 'blog/editorcp/delete_tag.html'
     model = Tag
     success_url = reverse_lazy('blog:editorcp', args=('tag_deleted',))
-    login_url = 'blog:index'
-    redirect_field_name = None
 
     def test_func(self):
         return editorcp_check(self.request.user)
@@ -272,8 +243,6 @@ class EditorcpCreateImportantEntry(UserPassesTestMixin, generic.edit.CreateView)
     fields = ['entry', 'image_name']
     success_url = reverse_lazy(
         'blog:editorcp', args=('important_entry_created',))
-    login_url = 'blog:index'
-    redirect_field_name = None
 
     def test_func(self):
         return editorcp_check(self.request.user)
@@ -282,8 +251,6 @@ class EditorcpCreateImportantEntry(UserPassesTestMixin, generic.edit.CreateView)
 class EditorcpListImportantEntries(UserPassesTestMixin, generic.ListView):
     template_name = 'blog/editorcp/list_important_entries.html'
     context_object_name = 'important_entries_list'
-    login_url = 'blog:index'
-    redirect_field_name = None
 
     def get_queryset(self):
         return ImportantEntry.objects.all()
@@ -298,8 +265,6 @@ class EditorcpEditImportantEntry(UserPassesTestMixin, generic.edit.UpdateView):
     success_url = reverse_lazy(
         'blog:editorcp', args=('important_entry_edited',))
     fields = ['entry', 'image_name', 'active']
-    login_url = 'blog:index'
-    redirect_field_name = None
 
     def test_func(self):
         return editorcp_check(self.request.user)
@@ -309,9 +274,9 @@ class EditorcpDeleteImportantEntry(UserPassesTestMixin, generic.edit.DeleteView)
     template_name = 'blog/editorcp/delete_important_entry.html'
     model = ImportantEntry
     success_url = reverse_lazy(
-        'blog:editorcp', args=('important_entry_deleted',))
-    login_url = 'blog:index'
-    redirect_field_name = None
+        'blog:editorcp',
+        args=('important_entry_deleted',)
+    )
 
     def test_func(self):
         return editorcp_check(self.request.user)

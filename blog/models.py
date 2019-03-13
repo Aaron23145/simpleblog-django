@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
+from django.utils import timezone
 
 
 class Tag(models.Model):
@@ -20,13 +22,24 @@ class Entry(models.Model):
                   'the article is. This text will appear below your entry title and on the '
                   'carousel if it is marked as important.'
     )
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', default=timezone.now)
     tag = models.ManyToManyField(Tag, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     slug = models.SlugField()
 
     def __str__(self):
         return f'{self.title} by {self.author}: {self.summary[:10]}'
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        try:
+            self.important_entry.delete()
+        except AttributeError:
+            pass
+        super().delete(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'entries'

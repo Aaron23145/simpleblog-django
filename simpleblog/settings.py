@@ -91,6 +91,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+LOGIN_URL = 'blog:login'
+
 LOGIN_REDIRECT_URL = 'blog:index'
 
 import dj_database_url

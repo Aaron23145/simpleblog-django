@@ -51,7 +51,7 @@
             </li>
           {% endif %}
           <li class="nav-item">
-            <a class="nav-link" href="#">{{ user.username }}</a>
+            <a class="nav-link" href="{% url 'blog:view_user' user.pk %}">{{ user.username }}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'blog:logout' %}">Logout</a>
