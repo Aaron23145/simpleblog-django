@@ -67,17 +67,44 @@ def editorcp_check(user):
 
 @user_passes_test(editorcp_check, login_url='blog:index', redirect_field_name=None)
 def editorcp_index(request):
-    context = {
-        'alerts': {
-            'no_important_entries': False,
-        },
-    }
-
+    entries = Entry.objects.all()
+    tags = Tag.objects.all()
     important_entries = ImportantEntry.objects.all()
     active_important_entries = ImportantEntry.objects.filter(active=True)
 
-    if important_entries.count() == 0 or active_important_entries.count() == 0:
-        context['alerts']['no_important_entries'] = True
+    def check_no_entries_created():
+        return not entries.count()
+
+    def check_no_tags_created():
+        return not tags.count()
+
+    def check_no_important_entries_active():
+        return important_entries.count() == 0 or active_important_entries.count() == 0
+
+
+    context = {
+        'alerts': {
+            'no_entries_created': {
+                'show': check_no_entries_created(),
+                'msg': 'You have not created any entry yet. Your blog will appear without '
+                       'content until you do it.',
+                'type': 'danger',
+            },
+            'no_tags_created': {
+                'show': check_no_tags_created(),
+                'msg': 'You have not created any tag yet. This could provoke that your '
+                       'visitors are not receiving enough description about your entries.',
+                'type': 'warning',
+            },
+            'no_important_entries': {
+                'show': check_no_important_entries_active(),
+                'msg': 'You have not set any entry as important. Because of this, the carousel '
+                       'of the blog pages will not appear. If you want to make it visible, mark '
+                       'an entry as important.',
+                'type': 'danger',
+            },
+        },
+    }
 
     return render(request, 'blog/editorcp/index.html', context)
 

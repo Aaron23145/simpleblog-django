@@ -9,14 +9,16 @@
 {% endblock h1 %}
 
 {% block content %}
-{% if alerts.no_important_entries %}
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    You have not set any entry as important. Because of this, the carousel of the blog pages can not appear. If you want to make it appear, mark any entry as important.
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-{% endif %}
+{% for alert in alerts.values %}
+  {% if alert.show %}
+    <div class="alert alert-{{ alert.type }} alert-dismissible fade show" role="alert">
+      {{ alert.msg }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  {% endif %}
+{% endfor %}
 
 <h2>EditorCP's Overview</h2>
 <br><br>
