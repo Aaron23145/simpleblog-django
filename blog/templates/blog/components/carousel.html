@@ -18,16 +18,20 @@
             <div class="carousel-item active">
               <img src="{% static important_entry.get_image_url %}" class="d-block w-100" alt="">
               <div class="carousel-caption">
-                <h5>{{ important_entry.entry.title }}</h5>
-                <p>{{ important_entry.entry.summary }}</p>
+                <a href="{% url 'blog:view_entry' important_entry.entry.pk important_entry.entry.slug %}">
+                  <h5>{{ important_entry.entry.title }}</h5>
+                  <p>{{ important_entry.entry.summary }}</p>
+                </a>
               </div>
             </div>
           {% else %}
             <div class="carousel-item">
               <img src="{% static important_entry.get_image_url %}" class="d-block w-100" alt="">
               <div class="carousel-caption d-none d-md-block">
-                <h5>{{ important_entry.entry.title }}</h5>
-                <p>{{ important_entry.entry.summary }}</p>
+                <a href="{% url 'blog:view_entry' important_entry.entry.pk important_entry.entry.slug %}">
+                  <h5>{{ important_entry.entry.title }}</h5>
+                  <p>{{ important_entry.entry.summary }}</p>
+                </a>
               </div>
             </div>
           {% endif %}
